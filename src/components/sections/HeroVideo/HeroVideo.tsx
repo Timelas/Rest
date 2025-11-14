@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 
 import captureHero from '@/assets/img/captureHero.png'
 import LogoFull from '@/assets/svg/logoFull.svg'
@@ -14,9 +14,15 @@ type HeroBadge = {
   iconAlt?: string
 }
 
+type VideoSource = {
+  src: string
+  type: string
+}
+
 type HeroVideoProps = {
   poster: string
   videoSrc?: string
+  videoSources?: VideoSource[]
   description: string
   subtitle: string
   badges: HeroBadge[]
@@ -27,6 +33,7 @@ type HeroVideoProps = {
 export const HeroVideo = ({
   poster,
   videoSrc,
+  videoSources,
   subtitle,
   description,
   badges,
@@ -38,16 +45,28 @@ export const HeroVideo = ({
   const [descriptionVisible, setDescriptionVisible] = useState(false)
   const [badgesVisible, setBadgesVisible] = useState(false)
 
+  const resolvedSources: VideoSource[] = useMemo(() => {
+    if (videoSources?.length) return videoSources
+    if (videoSrc) {
+      return [{ src: videoSrc, type: 'video/mp4' }]
+    }
+    return []
+  }, [videoSrc, videoSources])
+
+  const hasVideo = resolvedSources.length > 0
+  const sourceKey = resolvedSources.map((source) => source.src).join('|')
+
   useEffect(() => {
     setIsVideoReady(false)
     setCtaVisible(false)
     setDescriptionVisible(false)
     setBadgesVisible(false)
-    if (!videoSrc) {
+    if (!hasVideo) {
       const raf = requestAnimationFrame(() => setIsVideoReady(true))
       return () => cancelAnimationFrame(raf)
     }
-  }, [videoSrc])
+    return undefined
+  }, [hasVideo, sourceKey])
 
   useEffect(() => {
     if (!isVideoReady) return
@@ -64,7 +83,7 @@ export const HeroVideo = ({
   return (
     <section className={cn(styles.hero, 'fade-in')} data-hero-section>
       <div className={styles.media}>
-        {videoSrc ? (
+        {hasVideo ? (
           <>
             <img
               src={captureHero}
@@ -76,11 +95,15 @@ export const HeroVideo = ({
               muted
               loop
               playsInline
+              preload="auto"
               poster={poster}
               onLoadedData={() => setIsVideoReady(true)}
               onCanPlay={() => setIsVideoReady(true)}
+              onError={() => setIsVideoReady(true)}
             >
-              <source src={videoSrc} type="video/mp4" />
+              {resolvedSources.map((source) => (
+                <source key={source.src} src={source.src} type={source.type} />
+              ))}
             </video>
           </>
         ) : (

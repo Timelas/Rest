@@ -8,7 +8,7 @@ import { HallsShowcase } from '@/components/sections/HallsShowcase/HallsShowcase
 import { FamilyActivities } from '@/components/sections/FamilyActivities/FamilyActivities'
 import { GALLERY_IMAGES, HERO_BADGES } from '@/data/content'
 import heroVideoWebm from '@/assets/video/home.webm?url'
-import heroVideoMp4 from '@/assets/video/home.mp4?url'
+import heroVideoMp4 from '@/assets/video/home.MP4?url'
 
 import styles from './HomePage.module.css'
 

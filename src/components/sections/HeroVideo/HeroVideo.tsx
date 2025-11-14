@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 
 import captureHero from '@/assets/img/captureHero.png'
 import LogoFull from '@/assets/svg/logoFull.svg'
@@ -44,9 +44,17 @@ export const HeroVideo = ({
   const [ctaVisible, setCtaVisible] = useState(false)
   const [descriptionVisible, setDescriptionVisible] = useState(false)
   const [badgesVisible, setBadgesVisible] = useState(false)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
 
   const resolvedSources: VideoSource[] = useMemo(() => {
-    if (videoSources?.length) return videoSources
+    if (videoSources?.length) {
+      return [...videoSources].sort((a, b) => {
+        if (a.type === b.type) return 0
+        if (a.type === 'video/mp4') return -1
+        if (b.type === 'video/mp4') return 1
+        return 0
+      })
+    }
     if (videoSrc) {
       return [{ src: videoSrc, type: 'video/mp4' }]
     }
@@ -66,6 +74,37 @@ export const HeroVideo = ({
       return () => cancelAnimationFrame(raf)
     }
     return undefined
+  }, [hasVideo, sourceKey])
+
+  useEffect(() => {
+    if (!hasVideo) return
+    const video = videoRef.current
+    if (!video) return
+
+    video.muted = true
+    video.load()
+    const playPromise = video.play()
+    if (playPromise?.catch) {
+      playPromise.catch(() => {
+        video.muted = true
+        video.play().catch(() => undefined)
+      })
+    }
+
+    const handleVisibility = () => {
+      if (!video) return
+      if (document.visibilityState === 'visible') {
+        const retry = video.play()
+        if (retry?.catch) retry.catch(() => undefined)
+      } else {
+        video.pause()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility)
+    }
   }, [hasVideo, sourceKey])
 
   useEffect(() => {
@@ -91,6 +130,7 @@ export const HeroVideo = ({
               className={cn(styles.videoPlaceholder, isVideoReady && styles['videoPlaceholder--hidden'])}
             />
             <video
+              ref={videoRef}
               autoPlay
               muted
               loop

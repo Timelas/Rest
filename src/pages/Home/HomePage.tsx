@@ -7,7 +7,8 @@ import { BanquetsShowcase } from '@/components/sections/BanquetsShowcase/Banquet
 import { HallsShowcase } from '@/components/sections/HallsShowcase/HallsShowcase'
 import { FamilyActivities } from '@/components/sections/FamilyActivities/FamilyActivities'
 import { GALLERY_IMAGES, HERO_BADGES } from '@/data/content'
-import heroVideoWebm from '@/assets/video/home.webm'
+import heroVideoWebm from '@/assets/video/home.webm?url'
+import heroVideoMp4 from '@/assets/video/home.mp4?url'
 
 import styles from './HomePage.module.css'
 
@@ -22,6 +23,7 @@ export const HomePage = ({ onBook, onOpenMenu, onNavigateAbout }: HomePageProps)
     <HeroVideo
       poster="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1600&q=80"
       videoSources={[
+        { src: heroVideoMp4, type: 'video/mp4' },
         { src: heroVideoWebm, type: 'video/webm' },
       ]}
       subtitle="Грузинский ресторан в Москве на Мичуринском проспекте STRAPEZO Ресторан грузинской и европейской кухни. Банкеты и дни рождения"

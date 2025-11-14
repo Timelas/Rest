@@ -24,7 +24,8 @@ export const BanquetsShowcase = () => {
   const [isSliderMode, setIsSliderMode] = useState(false)
   const trackRef = useRef<HTMLDivElement | null>(null)
   const lastScrollYRef = useRef(0)
-  const windowScrollRaf = useRef<number | null>(null)
+  const scrollTargetRef = useRef(0)
+  const animationFrameRef = useRef<number | null>(null)
 
   useEffect(() => {
     if (section.inView) {
@@ -37,6 +38,15 @@ export const BanquetsShowcase = () => {
     return [...VIDEO_PLACEHOLDERS, ...VIDEO_PLACEHOLDERS]
   }, [isSliderMode])
 
+  const stopSmoothScroll = useCallback(() => {
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current)
+      animationFrameRef.current = null
+    }
+  }, [])
+
+  useEffect(() => () => stopSmoothScroll(), [stopSmoothScroll])
+
   const normalizeLoop = useCallback(() => {
     if (!isSliderMode) return
     const track = trackRef.current
@@ -47,8 +57,10 @@ export const BanquetsShowcase = () => {
 
     if (track.scrollLeft <= 0) {
       track.scrollLeft += baseWidth
+      scrollTargetRef.current += baseWidth
     } else if (track.scrollLeft >= baseWidth) {
       track.scrollLeft -= baseWidth
+      scrollTargetRef.current -= baseWidth
     }
   }, [isSliderMode])
 
@@ -60,7 +72,37 @@ export const BanquetsShowcase = () => {
     const baseWidth = track.scrollWidth / 2
     if (baseWidth <= 0) return
     track.scrollLeft = baseWidth / 2
+    scrollTargetRef.current = track.scrollLeft
   }, [isSliderMode])
+
+  const animateScroll = useCallback(() => {
+    const track = trackRef.current
+    if (!track) {
+      animationFrameRef.current = null
+      return
+    }
+
+    const current = track.scrollLeft
+    const target = scrollTargetRef.current
+    const diff = target - current
+
+    if (Math.abs(diff) < 0.5) {
+      track.scrollLeft = target
+      normalizeLoop()
+      animationFrameRef.current = null
+      return
+    }
+
+    track.scrollLeft = current + diff * 0.15
+    normalizeLoop()
+    animationFrameRef.current = requestAnimationFrame(animateScroll)
+  }, [normalizeLoop])
+
+  const requestSmoothScroll = useCallback(() => {
+    if (!isSliderMode) return
+    if (animationFrameRef.current !== null) return
+    animationFrameRef.current = requestAnimationFrame(animateScroll)
+  }, [animateScroll, isSliderMode])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -74,7 +116,11 @@ export const BanquetsShowcase = () => {
           ensureInitialPosition()
         } else {
           const track = trackRef.current
-          if (track) track.scrollLeft = 0
+          if (track) {
+            track.scrollLeft = 0
+          }
+          scrollTargetRef.current = 0
+          stopSmoothScroll()
         }
       })
     }
@@ -98,38 +144,33 @@ export const BanquetsShowcase = () => {
     lastScrollYRef.current = window.scrollY
 
     const handleWindowScroll = () => {
-      if (windowScrollRaf.current !== null) return
-      windowScrollRaf.current = requestAnimationFrame(() => {
-        windowScrollRaf.current = null
-        const track = trackRef.current
-        if (!track) return
+      const track = trackRef.current
+      if (!track) return
 
-        const currentY = window.scrollY
-        const delta = currentY - lastScrollYRef.current
-        lastScrollYRef.current = currentY
-        if (delta === 0) return
+      const currentY = window.scrollY
+      const delta = currentY - lastScrollYRef.current
+      lastScrollYRef.current = currentY
+      if (delta === 0) return
 
-        track.scrollLeft += delta * 0.35
-        normalizeLoop()
-      })
+      scrollTargetRef.current = track.scrollLeft + delta * 0.35
+      requestSmoothScroll()
     }
 
     window.addEventListener('scroll', handleWindowScroll, { passive: true })
     return () => {
       window.removeEventListener('scroll', handleWindowScroll)
-      if (windowScrollRaf.current !== null) {
-        cancelAnimationFrame(windowScrollRaf.current)
-        windowScrollRaf.current = null
-      }
     }
-  }, [isSliderMode, normalizeLoop])
+  }, [isSliderMode, requestSmoothScroll])
 
   useEffect(() => {
     if (!isSliderMode) return
     const track = trackRef.current
     if (!track) return
 
-    const handleTrackScroll = () => normalizeLoop()
+    const handleTrackScroll = () => {
+      scrollTargetRef.current = track.scrollLeft
+      normalizeLoop()
+    }
     track.addEventListener('scroll', handleTrackScroll)
     return () => track.removeEventListener('scroll', handleTrackScroll)
   }, [isSliderMode, normalizeLoop])
@@ -145,8 +186,7 @@ export const BanquetsShowcase = () => {
     let pointerId: number | null = null
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (event.pointerType !== 'mouse') return
-      if ((event.buttons & 1) === 0) return
+      if (event.pointerType === 'mouse' && (event.buttons & 1) === 0) return
       isDragging = true
       startX = event.clientX
       startScrollLeft = track.scrollLeft
@@ -154,12 +194,14 @@ export const BanquetsShowcase = () => {
       track.classList.add(styles.dragging)
       track.setPointerCapture(event.pointerId)
       event.preventDefault()
+      stopSmoothScroll()
     }
 
     const handlePointerMove = (event: PointerEvent) => {
       if (!isDragging) return
       const delta = event.clientX - startX
       track.scrollLeft = startScrollLeft - delta
+      scrollTargetRef.current = track.scrollLeft
     }
 
     const stopDragging = () => {
@@ -175,6 +217,8 @@ export const BanquetsShowcase = () => {
         pointerId = null
       }
       normalizeLoop()
+      scrollTargetRef.current = track.scrollLeft
+      requestSmoothScroll()
     }
 
     track.addEventListener('pointerdown', handlePointerDown)
@@ -191,7 +235,7 @@ export const BanquetsShowcase = () => {
       track.removeEventListener('pointerleave', stopDragging)
       track.removeEventListener('pointercancel', stopDragging)
     }
-  }, [isSliderMode, normalizeLoop])
+  }, [isSliderMode, normalizeLoop, requestSmoothScroll, stopSmoothScroll])
 
   return (
     <div className={styles.section} ref={section.ref}>

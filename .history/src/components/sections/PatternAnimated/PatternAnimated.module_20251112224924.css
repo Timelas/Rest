@@ -1,0 +1,36 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wrapper :global(svg) {
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  display: block;
+}
+
+.wrapper :global(path) {
+  fill: var(--color-accent-pattern);
+  stroke: var(--color-accent-pattern);
+  stroke-width: 4; /* не слишком толстый */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 8s ease-in-out forwards;
+  vector-effect: non-scaling-stroke; /* фиксирует толщину при масштабировании */
+  clip-path: path('M0,0h100%v100%h-100%z'); /* ограничивает stroke внутрь */
+}
+
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+

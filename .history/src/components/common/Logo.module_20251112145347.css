@@ -1,0 +1,28 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 61px;
+  height: 91px;
+}
+
+.logo img {
+  height: auto;
+  display: block;
+}
+
+.logo--compact img {
+  width: 48px;
+}
+
+.logo--default img {
+  width: 88px;
+}
+
+.logo--light img {
+  filter: brightness(0) invert(1);
+}
+
+.logo--dark img {
+  filter: none;
+}

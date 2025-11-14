@@ -1,0 +1,36 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wrapper :global(svg) {
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  display: block;
+}
+
+.wrapper :global(path) {
+  stroke: var(--color-accent-pattern);
+  stroke-width: 1.4;
+  fill: var(--color-accent-pattern);
+  fill-opacity: 0;
+  animation:
+    draw 8s ease-in-out forwards,
+    fillIn 8s ease-in-out forwards;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fillIn {
+  0% { fill-opacity: 0; }
+  80% { fill-opacity: 0; }
+  100% { fill-opacity: 1; }
+}
+
+
+

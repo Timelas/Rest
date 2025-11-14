@@ -1,0 +1,32 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wrapper svg {
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  display: block;
+}
+
+.wrapper svg path {
+  stroke: var(--color-accent-pattern);
+  stroke-width: 1.4;
+  fill: var(--color-accent-pattern);
+  fill-opacity: 0; /* <-- заливка скрыта */
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition:
+    stroke-dashoffset 8s ease-in-out,
+    fill-opacity 8s ease-in-out; /* <-- анимируем и заливку */
+}
+
+/* При скролле запускаем анимацию */
+.wrapper.animate svg path {
+  stroke-dashoffset: 0;
+  fill-opacity: 1; /* <-- заливка появляется одновременно */
+}
+

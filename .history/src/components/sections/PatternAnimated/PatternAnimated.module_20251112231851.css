@@ -1,0 +1,15 @@
+.wrapper svg path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 8s ease-in-out;
+}
+
+.animate svg path {
+  stroke-dashoffset: 0;
+}
+
+.wrapper :global(path) {
+  stroke: var(--color-accent-pattern);
+  stroke-width: 1.4;
+  fill: var(--color-accent-pattern);
+}

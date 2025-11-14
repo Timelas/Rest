@@ -1,0 +1,83 @@
+.sliderSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sliderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sliderControls {
+  display: flex;
+  gap: 8px;
+}
+
+.sliderControls button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(51, 51, 24, 0.15);
+}
+
+.sliderTrack {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(280px, 320px);
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 12px;
+}
+
+.slide {
+  border-radius: 28px;
+  overflow: hidden;
+  background: rgba(51, 51, 24, 0.05);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slide img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.storySlider {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.storySlide {
+  border-radius: 24px;
+  padding: 24px;
+  background: rgba(51, 51, 24, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.storyEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--color-muted);
+}
+
+.storyProgress {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(51, 51, 24, 0.18);
+}
+
+.storyProgress div {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-dark);
+}

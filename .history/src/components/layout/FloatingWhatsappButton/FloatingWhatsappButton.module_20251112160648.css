@@ -1,0 +1,35 @@
+.button {
+  position: fixed;
+  bottom: 40px;
+  right: 78px;
+  z-index: 120;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  background: transparent;
+  transition: all .3 ease-in-out;
+}
+
+.button img {
+  width: 74px;
+  height: 74px;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
+
+.button:active {
+  transform: scale(.98);
+}
+
+@media (max-width: 640px) {
+  .button {
+    right: 16px;
+    bottom: 24px;
+  }
+}

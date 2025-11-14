@@ -1,0 +1,198 @@
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 15px;
+}
+
+.title {
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.hallWrapper {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 32px);
+}
+
+.navArrow {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  width: 47px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navArrow img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.hallCard {
+  display: flex;
+  gap: clamp(24px, 6vw, 48px);
+  width: 100%;
+  max-width: 1160px;
+}
+
+.infoColumn {
+  flex: 0 0 420px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hallName {
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  list-style: none;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.featureItem img {
+  width: 28px;
+  height: 28px;
+}
+
+.ctaRow {
+  margin-top: 40px;
+}
+
+.galleryColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mainMedia {
+  width: 100%;
+  aspect-ratio: 676 / 413;
+  overflow: hidden;
+}
+
+.mainMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.thumb {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: 130 / 89;
+  transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.2s ease;
+}
+
+.thumb:hover {
+  transform: translateY(-4px);
+}
+
+.thumb[data-active='true'] {
+  box-shadow: 0 0 0 2px var(--color-dark) inset;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .hallWrapper {
+    flex-direction: column;
+  }
+
+  .hallCard {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .infoColumn {
+    flex: none;
+    max-width: 100%;
+  }
+
+  .galleryColumn {
+    width: 100%;
+  }
+
+  .navArrow {
+    width: 72px;
+    height: 78px;
+  }
+}
+
+@media (max-width: 640px) {
+  .filters {
+    gap: 8px;
+  }
+
+  .features {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .thumbRow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

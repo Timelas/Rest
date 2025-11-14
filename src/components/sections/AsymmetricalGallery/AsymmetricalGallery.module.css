@@ -1,0 +1,76 @@
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.segment {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.columns {
+  display: flex;
+  gap: 14px;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.tile {
+  width: 100%;
+  background: var(--color-light-variant);
+  aspect-ratio: var(--tile-ratio, 1 / 1);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.05);
+  transition: transform 0.6s ease;
+}
+
+.tileVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tileVisible img {
+  transform: scale(1);
+}
+
+.wide {
+  aspect-ratio: var(--tile-ratio, 2 / 1);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 69px;
+}
+
+@media (max-width: 1280px) {
+  .columns {
+    gap: 4px;
+  }
+  
+  .column {
+    gap: 6px;
+  }
+
+  .section {
+    gap: 6px;
+  }
+}

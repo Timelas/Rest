@@ -1,0 +1,38 @@
+.button {
+  border-radius: var(--radius-pill);
+  padding: 14px 28px;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.button:active {
+  transform: translateY(2px);
+}
+
+.button--dark {
+  background: var(--color-dark);
+  color: var(--color-light);
+  border-color: var(--color-dark);
+}
+
+.button--light {
+  background: var(--color-light);
+  color: var(--color-dark);
+  border-color: rgba(51, 51, 24, 0.2);
+}
+
+.button--outline {
+  background: transparent;
+  color: var(--color-dark);
+  border-color: rgba(51, 51, 24, 0.4);
+}
+
+.button--large {
+  padding: 18px 32px;
+}
+
+.button--fullWidth {
+  width: 100%;
+}

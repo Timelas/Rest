@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wrapper svg {
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  display: block;
+}
+
+/* Изначально контур скрыт */
+.wrapper svg path {
+  fill: var(--color-accent-pattern);
+  stroke: var(--color-accent-pattern);
+  stroke-width: 1.4;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 8s ease-in-out;
+}
+
+/* При появлении класса animate узор "рисуется" */
+.wrapper.animate svg path {
+  stroke-dashoffset: 0;
+}

@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wrapper :global(svg) {
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  display: block;
+}
+
+.wrapper :global(path) {
+  stroke: var(--color-accent-pattern);
+  stroke-width: 1.4;
+  fill: var(--color-accent-pattern);
+  fill-opacity: 0; /* сначала невидимый fill */
+  animation: fillIn 0.8s ease-in forwards;
+  animation-delay: 7.2s; /* начнет заливаться под конец рисования */
+}
+
+/* Анимация появления заливки */
+@keyframes fillIn {
+  to {
+    fill-opacity: 1;
+  }
+}
+

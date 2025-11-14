@@ -1,0 +1,35 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wrapper :global(svg) {
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  display: block;
+}
+
+.wrapper :global(path) {
+  stroke: var(--color-accent-pattern);
+  stroke-width: 1.4;
+  fill: var(--color-accent-pattern);
+  fill-opacity: 0; /* невидимая заливка */
+  animation:
+    draw 8s ease-in-out forwards,
+    fillIn 1s ease-in 7s forwards;
+}
+
+/* Обводка рисуется */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Заливка проявляется под конец */
+@keyframes fillIn {
+  to { fill-opacity: 1; }
+}
+
+

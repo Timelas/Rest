@@ -1,0 +1,108 @@
+.section {
+  width: 100%;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.verticalLabel {
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.track {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.trackSlider {
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+}
+
+.trackSlider::-webkit-scrollbar {
+  display: none;
+}
+
+.trackSlider.dragging {
+  cursor: grabbing;
+}
+
+.card {
+  width: 280px;
+  height: 160px;
+  border-radius: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: var(--card-delay, 0s);
+}
+
+.cardVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .inner {
+    align-items: flex-start;
+  }
+
+  .verticalLabel {
+    writing-mode: horizontal-tb;
+    transform: rotate(-90deg);
+    justify-content: flex-start;
+  }
+
+  .track {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .inner {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .verticalLabel {
+    transform: none;
+    text-align: left;
+    width: 100%;
+  }
+
+  .track {
+    width: 100%;
+  }
+
+  .card {
+    width: 220px;
+    height: 140px;
+    border-radius: 18px;
+  }
+}

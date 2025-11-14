@@ -1,0 +1,104 @@
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: clamp(48px, 8vw, 80px) 0 ;
+}
+
+.inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 12px;
+  max-width: 668px;
+}
+
+.title {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+}
+
+.mediaRow {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  align-self: center;
+  padding-left: clamp(24px, 3.9vw, 74px);
+}
+
+.verticalLabel {
+  display: flex;
+  align-items: stretch;
+  min-height: 100%;
+}
+
+.verticalText {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-transform: uppercase;
+}
+
+.videoTrack {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.videoCard {
+  flex: 0 0 252px;
+  max-width: 252px;
+  width: 100%;
+  aspect-ratio: 252 / 388;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--color-light-variant);
+}
+
+.videoCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .mediaRow {
+    flex-direction: column;
+    padding-left: 0;
+  }
+
+  .verticalLabel {
+    align-items: flex-start;
+  }
+
+  .verticalText {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .videoTrack {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: clamp(32px, 12vw, 48px) clamp(16px, 6vw, 24px);
+  }
+
+  .videoTrack {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,9 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-light);
+  color: var(--color-dark);
+  position: relative;
+}
+
+.main {
+}

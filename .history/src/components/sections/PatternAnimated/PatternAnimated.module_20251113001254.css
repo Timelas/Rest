@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wrapper :global(svg) {
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  display: block;
+}
+
+.wrapper :global(path) {
+  stroke: #33331852;
+  fill: none;
+  stroke-width: 2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 10s ease-in-out, fill-opacity 1s ease-in 9s, stroke 1s ease-in 9s;
+}
+
+/* Когда анимация активируется */
+.animate :global(path) {
+  stroke-dashoffset: 0;
+  stroke: #11271f10;
+  fill: #11271f10;
+  fill-opacity: 1;
+}

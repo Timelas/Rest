@@ -1,0 +1,58 @@
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.segment {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.columns {
+  display: flex;
+  gap: 14px;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.tile {
+  width: 100%;
+  background: var(--color-light-variant);
+  aspect-ratio: var(--tile-ratio, 1 / 1);
+  overflow: hidden;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.wide {
+  aspect-ratio: var(--tile-ratio, 2 / 1);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 69px;
+}
+
+@media (max-width: 1024px) {
+  .columns {
+    gap: 6px;
+  }
+  
+  .column {
+    gap: 4px;
+  }
+}

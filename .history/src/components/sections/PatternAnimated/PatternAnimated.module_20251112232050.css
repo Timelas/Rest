@@ -1,0 +1,9 @@
+.wrapper svg path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 8s ease-in-out;
+}
+
+.wrapper svg.animate path {
+  stroke-dashoffset: 0;
+}

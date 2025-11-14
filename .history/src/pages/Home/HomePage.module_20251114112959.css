@@ -1,0 +1,30 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.aboutSection {
+  padding: 0;
+}
+
+.gallerySection {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.patternSection,
+.menuSection,
+.banquetsSection,
+.hallsSection,
+.familySection {
+  padding: 0;
+  overflow: hidden;
+}
+
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}

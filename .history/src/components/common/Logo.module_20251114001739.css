@@ -1,0 +1,30 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 61px;
+  height: 91px;
+}
+
+.logo img {
+  height: auto;
+  display: block;
+}
+
+.logo--compact img {
+  width: 48px;
+}
+
+.logo--default img {
+  width: 88px;
+}
+
+@media (max-width: 1024px) {
+  .logo--compact img {
+    width: 20px;
+  }
+  
+  .logo--default img {
+    width: 45px;
+  }
+}

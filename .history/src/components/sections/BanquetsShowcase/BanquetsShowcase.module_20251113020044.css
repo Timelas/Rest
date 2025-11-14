@@ -1,0 +1,111 @@
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: clamp(48px, 8vw, 80px) clamp(16px, 5vw, 48px);
+}
+
+.inner {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 960px;
+}
+
+.title {
+  font-size: clamp(var(--font-h2-mobile), 4vw, var(--font-h2-desktop));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.description {
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.4;
+  color: var(--color-dark);
+}
+
+.mediaRow {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding-left: clamp(24px, 3.9vw, 74px);
+}
+
+.verticalLabel {
+  display: flex;
+  align-items: stretch;
+  min-height: 100%;
+}
+
+.verticalText {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: clamp(var(--font-h2-mobile), 3vw, var(--font-h2-desktop));
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.videoTrack {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.videoCard {
+  flex: 0 0 252px;
+  max-width: 252px;
+  width: 100%;
+  aspect-ratio: 252 / 388;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--color-light-variant);
+}
+
+.videoCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .mediaRow {
+    flex-direction: column;
+    padding-left: 0;
+  }
+
+  .verticalLabel {
+    align-items: flex-start;
+  }
+
+  .verticalText {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .videoTrack {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: clamp(32px, 12vw, 48px) clamp(16px, 6vw, 24px);
+  }
+
+  .videoTrack {
+    flex-wrap: wrap;
+  }
+}

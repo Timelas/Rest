@@ -1,0 +1,141 @@
+@layer base {
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p,
+  a,
+  span,
+  button {
+    letter-spacing: var(--font-letter-spacing);
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(var(--font-paragraph-mobile), 2vw, var(--font-paragraph-desktop));
+    line-height: 1.6;
+    color: var(--color-dark);
+  }
+
+  h1,
+  .typo-h1 {
+    font-weight: 600;
+    font-size: clamp(var(--font-h1-mobile), 5vw, var(--font-h1-desktop));
+    line-height: 1.1;
+  }
+
+  h2,
+  .typo-h2 {
+    font-weight: 600;
+    font-size: clamp(var(--font-h2-mobile), 4vw, var(--font-h2-desktop));
+    line-height: 1.15;
+  }
+
+  h3,
+  .typo-h3 {
+    font-weight: 500;
+    font-size: clamp(var(--font-h3-mobile), 4vw, var(--font-h3-desktop));
+    line-height: 1.2;
+  }
+
+  h4,
+  .typo-h4 {
+    font-weight: 700;
+    font-size: clamp(var(--font-h4-mobile), 3vw, var(--font-h4-desktop));
+    line-height: 1.3;
+  }
+
+  h5,
+  .typo-h5 {
+    font-weight: 500;
+    font-size: clamp(var(--font-h5-mobile), 3vw, var(--font-h5-desktop));
+    line-height: 1.4;
+  }
+
+  .typo-description-hero {
+    font-weight: 400;
+    font-size: clamp(var(--font-hero-description-mobile), 4vw, var(--font-hero-description-desktop));
+    line-height: 1.35;
+  }
+
+  .typo-description-primary {
+    font-weight: 400;
+    font-size: clamp(var(--font-description-primary-mobile), 3vw, var(--font-description-primary-desktop));
+    line-height: 1.5;
+  }
+
+  .typo-description-secondary {
+    font-weight: 400;
+    font-size: clamp(var(--font-description-h23-mobile), 2.6vw, var(--font-description-h23-desktop));
+    line-height: 1.5;
+  }
+
+  .typo-description-emphasis {
+    font-weight: 500;
+    font-size: clamp(var(--font-description-h1-mobile), 2.4vw, var(--font-description-h1-desktop));
+    line-height: 1.4;
+  }
+
+  .typo-highlight {
+    font-weight: 400;
+    font-size: clamp(var(--font-highlight-mobile), 3vw, var(--font-highlight-desktop));
+    line-height: 1.35;
+  }
+
+  .typo-menu {
+    font-weight: 400;
+    font-size: clamp(var(--font-menu-mobile), 3vw, var(--font-menu-desktop));
+    line-height: 1.2;
+  }
+
+  .typo-base {
+    font-weight: 400;
+    font-size: clamp(var(--font-base-mobile), 3vw, var(--font-base-desktop));
+    line-height: 1.2;
+  }
+
+  .typo-button-large {
+    font-weight: 700;
+    font-size: clamp(var(--font-cta-large-mobile), 2.8vw, var(--font-cta-large-desktop));
+    line-height: 1.2;
+  }
+
+  .typo-button-regular {
+    font-weight: 500;
+    font-size: clamp(var(--font-cta-regular-mobile), 2.6vw, var(--font-cta-regular-desktop));
+    line-height: 1.2;
+  }
+
+  .typo-button-advantage {
+    font-weight: 300;
+    font-size: clamp(var(--font-button-advantage-mobile), 2.6vw, var(--font-button-advantage-desktop));
+    line-height: 1.2;
+  }
+
+  .typo-filter {
+    font-weight: 400;
+    font-size: clamp(var(--font-filter-mobile), 2.2vw, var(--font-filter-desktop));
+    line-height: 1.3;
+  }
+
+  .typo-breadcrumbs {
+    font-weight: 400;
+    font-size: clamp(var(--font-breadcrumbs-mobile), 2.4vw, var(--font-breadcrumbs-desktop));
+    line-height: 1.2;
+  }
+
+  .typo-footer {
+    font-weight: 400;
+    font-size: clamp(var(--font-footer-mobile), 2.6vw, var(--font-footer-desktop));
+    line-height: 1.4;
+  }
+
+  .typo-news-card {
+    font-weight: 400;
+    font-size: clamp(var(--font-news-card-mobile), 3vw, var(--font-news-card-desktop));
+    line-height: 1.4;
+  }
+}

@@ -1,0 +1,94 @@
+:root {
+  /* Color tokens */
+  --color-light: #efefe8;
+  --color-light-variant: #f7f7f1;
+  --color-dark: #333318;
+  --color-dark-variant: #33331852;
+  --color-accent-gold: #c8a26a;
+  --color-accent-rust: #b6653f;
+  --color-muted: #8c8872;
+  --color-border: rgba(51, 51, 24, 0.2);
+  --color-overlay: rgba(11, 11, 8, 0.65);
+  --color-whatsapp: #32d951;
+
+  /* Layout */
+  --max-width-desktop: 1440px;
+  --container-gutter-desktop: 48px;
+  --container-gutter-mobile: 20px;
+  --section-padding-desktop: 150px;
+  --section-padding-mobile: 47px;
+  --header-height: 96px;
+
+  /* Typography */
+  --font-primary: 'TT Firs Neue', 'TTFirsNeue', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-secondary: 'CaslonsModern', 'Times New Roman', serif;
+  --font-display: 'EditorialNew', 'Playfair Display', serif;
+  --font-body: var(--font-primary);
+  --font-letter-spacing: -0.03em;
+
+  /* Font sizes (desktop/mobile) */
+  --font-h1-desktop: 40px;
+  --font-h1-mobile: 20px;
+  --font-h2-desktop: 30px;
+  --font-h2-mobile: 20px;
+  --font-h3-desktop: 36px;
+  --font-h3-mobile: 24px;
+  --font-h4-desktop: 20px;
+  --font-h4-mobile: 16px;
+  --font-h5-desktop: 18px;
+  --font-h5-mobile: 16px;
+  --font-h5-description-desktop: 18px;
+  --font-h5-description-mobile: 14px;
+  --font-description-h1-desktop: 14px;
+  --font-description-h1-mobile: 12px;
+  --font-description-h23-desktop: 14px;
+  --font-description-h23-mobile: 12px;
+  --font-description-primary-desktop: 20px;
+  --font-description-primary-mobile: 12px;
+  --font-highlight-desktop: 20px;
+  --font-highlight-mobile: 14px;
+  --font-paragraph-desktop: 20px;
+  --font-paragraph-mobile: 12px;
+  --font-hero-description-desktop: 24px;
+  --font-hero-description-mobile: 12px;
+  --font-cta-large-desktop: 16px;
+  --font-cta-large-mobile: 12px;
+  --font-cta-regular-desktop: 16px;
+  --font-cta-regular-mobile: 12px;
+  --font-button-advantage-desktop: 16px;
+  --font-button-advantage-mobile: 12px;
+  --font-menu-desktop: 15px;
+  --font-menu-mobile: 12px;
+  --font-news-card-desktop: 18px;
+  --font-news-card-mobile: 12px;
+  --font-filter-desktop: 14px;
+  --font-filter-mobile: 14px;
+  --font-breadcrumbs-desktop: 14px;
+  --font-breadcrumbs-mobile: 12px;
+  --font-footer-desktop: 16px;
+  --font-footer-mobile: 12px;
+  --font-base-desktop: 16px;
+  --font-base-mobile: 12px;
+
+  /* Radii */
+  --radius-pill: 999px;
+  --radius-card: 32px;
+  --radius-photo: 24px;
+
+  /* Shadows */
+  --shadow-soft: 0 10px 40px rgba(27, 27, 17, 0.12);
+  --shadow-floating: 0 15px 60px rgba(0, 0, 0, 0.25);
+
+  /* Breakpoints */
+  --bp-mobile: 390px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1280px;
+  --bp-large: 1440px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-gutter-desktop: var(--container-gutter-mobile);
+    --section-padding-desktop: var(--section-padding-mobile);
+  }
+}

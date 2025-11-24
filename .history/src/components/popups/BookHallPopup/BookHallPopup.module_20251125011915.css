@@ -377,13 +377,8 @@
     margin-top: 10px;
   }
 
-  .photoFrame {
+  .photoStub {
     display: none;
-  }
-
-  .closeButton {
-    width: 30px;
-    height: 30px;
   }
 
   .field input,

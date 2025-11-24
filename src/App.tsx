@@ -121,6 +121,7 @@ export const App = () => {
             onBook={handleOpenBooking}
             onOpenMenu={() => setPopup('menu')}
             onNavigateAbout={() => handleNavigate('about')}
+            onNavigateKids={() => handleNavigate('kidsAnimation')}
           />
         )
       case 'about':
@@ -151,6 +152,7 @@ export const App = () => {
             onBook={handleOpenBooking}
             onOpenMenu={() => setPopup('menu')}
             onNavigateAbout={() => handleNavigate('about')}
+            onNavigateKids={() => handleNavigate('kidsAnimation')}
           />
         )
     }

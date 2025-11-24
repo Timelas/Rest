@@ -141,7 +141,7 @@ export const AboutPreview = ({ onNavigateAbout }: AboutPreviewProps) => {
       ref={section.ref}
       onMouseMove={spawnFrame}
     >
-      <div className={styles.gallery} ref={galleryRef}>
+      <div className={cn(styles.gallery, section.inView && styles.galleryReady)} ref={galleryRef}>
         {photos.map((photo) => (
           <figure
             key={photo.id}

@@ -373,19 +373,6 @@
     gap: 10px;
   }
 
-  .fieldTextarea {
-    margin-top: 10px;
-  }
-
-  .photoFrame {
-    display: none;
-  }
-
-  .closeButton {
-    width: 30px;
-    height: 30px;
-  }
-
   .field input,
   .field textarea {
     padding: 8px;

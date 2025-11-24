@@ -17,10 +17,9 @@ type HomePageProps = {
   onBook: (context?: Partial<BookingContext>) => void
   onOpenMenu: () => void
   onNavigateAbout: () => void
-  onNavigateKids?: () => void
 }
 
-export const HomePage = ({ onBook, onOpenMenu, onNavigateAbout, onNavigateKids }: HomePageProps) => (
+export const HomePage = ({ onBook, onOpenMenu, onNavigateAbout }: HomePageProps) => (
   <div className={styles.page}>
     <HeroVideo
       poster="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1600&q=80"
@@ -64,7 +63,7 @@ export const HomePage = ({ onBook, onOpenMenu, onNavigateAbout, onNavigateKids }
     </section>
 
     <section className={styles.familySection}>
-      <FamilyActivities onNavigateKids={() => onNavigateKids?.() ?? onNavigateAbout()} />
+      <FamilyActivities onNavigateKids={() => onNavigateAbout()} />
     </section>
   </div>
 )

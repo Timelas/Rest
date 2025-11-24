@@ -43,7 +43,11 @@ const ACTIVITIES = [
 
 type ActivityId = (typeof ACTIVITIES)[number]['id']
 
-export const FamilyActivities = () => {
+type FamilyActivitiesProps = {
+  onNavigateKids?: () => void
+}
+
+export const FamilyActivities = ({ onNavigateKids }: FamilyActivitiesProps) => {
   const [activeId, setActiveId] = useState<ActivityId>(ACTIVITIES[0].id)
   const [heights, setHeights] = useState<Partial<Record<ActivityId, number>>>({})
   const descriptionRefs = useRef<Record<string, HTMLParagraphElement | null>>({})
@@ -108,7 +112,13 @@ export const FamilyActivities = () => {
           })}
 
           <div className={cn(styles.actions, section.inView && styles.actionsVisible)}>
-            <Button variant="dark" size="large" maxWidth className={styles.actionsButton}>
+            <Button
+              variant="dark"
+              size="large"
+              maxWidth
+              className={styles.actionsButton}
+              onClick={() => onNavigateKids?.()}
+            >
               Подробнее
             </Button>
           </div>

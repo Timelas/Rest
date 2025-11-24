@@ -370,29 +370,12 @@
   }
 
   .inputStack {
-    gap: 10px;
-  }
-
-  .fieldTextarea {
-    margin-top: 10px;
-  }
-
-  .photoFrame {
-    display: none;
-  }
-
-  .closeButton {
-    width: 30px;
-    height: 30px;
+    gap: 18px;
   }
 
   .field input,
   .field textarea {
-    padding: 8px;
-  }
-
-  .placeholder {
-    font-size: 12px;
+    padding: 18px;
   }
 
   .checkboxLabel {

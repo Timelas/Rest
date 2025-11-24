@@ -370,20 +370,7 @@
   }
 
   .inputStack {
-    gap: 10px;
-  }
-
-  .fieldTextarea {
-    margin-top: 10px;
-  }
-
-  .photoFrame {
-    display: none;
-  }
-
-  .closeButton {
-    width: 30px;
-    height: 30px;
+    gap: 18px;
   }
 
   .field input,

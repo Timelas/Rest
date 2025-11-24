@@ -29,14 +29,15 @@ export const MenuPopup = ({
 }: MenuPopupProps) => {
   useScrollLock(isOpen)
 
-  const extendedNavigation = useMemo(
-    () =>
-      navItems.map((item) => ({
+  const extendedNavigation = useMemo(() => {
+    const allowed = new Set<PageSlug>(['mainHall', 'summerVeranda', 'kidsAnimation', 'menu'])
+    return navItems
+      .map((item) => ({
         ...item,
         description: PAGE_DEFINITIONS[item.slug]?.description,
-      })),
-    [navItems]
-  )
+      }))
+      .filter((item) => allowed.has(item.slug as PageSlug))
+  }, [navItems])
 
   if (!isOpen) return null
 

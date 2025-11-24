@@ -1,9 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs/Breadcrumbs'
 import { FeatureHighlight } from '@/components/sections/FeatureHighlight/FeatureHighlight'
-import { HallsShowcase } from '@/components/sections/HallsShowcase/HallsShowcase'
-import { MediaGallery } from '@/components/sections/MediaGallery/MediaGallery'
 import { AsymmetricalGallery } from '@/components/sections/AsymmetricalGallery/AsymmetricalGallery'
 import { PatternAnimated } from '@/components/sections/PatternAnimated/PatternAnimated'
 import type { PageSlug } from '@/constants/pages'
@@ -56,7 +54,6 @@ export const KidsAnimationPage = ({ onNavigate, onBook }: KidsAnimationPageProps
   const baseWidthRef = useRef(0)
   const offsetRef = useRef(0)
   const lastScrollYRef = useRef(0)
-  const slider = useInView<HTMLDivElement>({ threshold: 0.1 })
   const centerCopy = useInView<HTMLDivElement>({ threshold: 0.2 })
   const textCopy = useInView<HTMLDivElement>({ threshold: 0.2 })
 

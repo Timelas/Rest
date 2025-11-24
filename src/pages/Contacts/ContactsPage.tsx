@@ -1,5 +1,3 @@
-import mapImage from '@/assets/img/FooterMap.png'
-import videoImage from '@/assets/img/FooterVideo.png'
 import { CONTACTS } from '@/data/contacts'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs/Breadcrumbs'
 import type { PageSlug } from '@/constants/pages'

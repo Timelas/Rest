@@ -192,7 +192,7 @@ export const BookHallPopup = ({ isOpen, onClose, context }: BookHallPopupProps) 
               </label>
 
               <div className={styles.actions}>
-                <Button>Отправить заявку</Button>
+                <Button disabled={submitDisabled}>Отправить заявку</Button>
               </div>
             </form>
           </div>

@@ -58,7 +58,11 @@
 .actions {
   display: flex;
   justify-content: center;
-  margin-top: 69px;
+  margin-top: 40px;
+}
+
+.section :global(.hide-actions) {
+  display: none;
 }
 
 @media (max-width: 1280px) {

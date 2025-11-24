@@ -16,15 +16,17 @@ import menu8 from '@/assets/img/Rectangle 23.png'
 import { Button } from '@/components/ui/Button/Button'
 import { FilterChip } from '@/components/ui/FilterChip/FilterChip'
 import { useInView } from '@/hooks/useInView'
+import type { BookingContext } from '@/types/site'
 import { cn } from '@/utils/cn'
 
+import { HallCard } from './HallCard'
 import styles from './HallsShowcase.module.css'
 
 const MAX_THUMBS = 5
 const MOBILE_THUMBS = 3
 const CARD_ANIMATION_MS = 450
 
-const HALLS = [
+export const HALLS = [
   {
     id: 'main',
     name: 'основной зал',
@@ -87,10 +89,14 @@ const HALLS = [
   },
 ] as const
 
-type Hall = (typeof HALLS)[number]
-type HallId = Hall['id']
+export type Hall = (typeof HALLS)[number]
+export type HallId = Hall['id']
 
-export const HallsShowcase = () => {
+type HallsShowcaseProps = {
+  onBookHall?: (context: BookingContext) => void
+}
+
+export const HallsShowcase = ({ onBookHall }: HallsShowcaseProps) => {
   const section = useInView<HTMLDivElement>({ threshold: 0.3 })
   const [activeHallId, setActiveHallId] = useState<HallId>(HALLS[0].id)
   const [activeMediaIndex, setActiveMediaIndex] = useState(0)
@@ -205,7 +211,7 @@ export const HallsShowcase = () => {
             <img src={arrowLeft} alt="" aria-hidden="true" />
           </button>
 
-          <div
+          <HallCard
             className={cn(
               styles.hallCard,
               transitionStage === 'leaving' &&
@@ -213,69 +219,14 @@ export const HallsShowcase = () => {
               transitionStage === 'entering' &&
                 (transitionDirection === 'right' ? styles.hallCardEnteringRight : styles.hallCardEnteringLeft)
             )}
-          >
-            <div className={cn(styles.infoColumn, section.inView && styles.infoVisible)}>
-              <h3
-                className={cn(styles.hallName, styles.hallNameDesktop, 'typo-h3', styles.copyReveal)}
-                style={{ '--reveal-delay': '0s' } as React.CSSProperties}
-              >
-                {activeHall.name}
-              </h3>
-              <div className={styles.texts}>
-                <p
-                  className={cn(styles.description, 'typo-description-secondary', styles.copyReveal)}
-                  style={{ '--reveal-delay': '0.2s' } as React.CSSProperties}
-                >
-                  {activeHall.descriptionPrimary}
-                </p>
-                <p
-                  className={cn(styles.description, 'typo-description-secondary', styles.copyReveal)}
-                  style={{ '--reveal-delay': '0.4s' } as React.CSSProperties}
-                >
-                  {activeHall.descriptionSecondary}
-                </p>
-              </div>
-
-              <ul className={styles.features}>
-                {activeHall.features.map((feature) => (
-                  <li key={feature.id} className={styles.featureItem}>
-                    <img src={feature.icon} alt="" aria-hidden="true" />
-                    <span className='typo-description-feature'>{feature.label}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className={cn(styles.ctaRow, styles.copyReveal)} style={{ '--reveal-delay': '0.8s' } as React.CSSProperties}>
-                <Button size="large" padding="wide">Забронировать зал</Button>
-              </div>
-            </div>
-
-            <div className={cn(styles.galleryColumn, section.inView && styles.galleryVisible)}>
-              <h3
-                className={cn(styles.hallName, styles.hallNameMobile, 'typo-h3', styles.copyReveal)}
-                style={{ '--reveal-delay': '0s' } as React.CSSProperties}
-                aria-hidden="true"
-              >
-                {activeHall.name}
-              </h3>
-              <figure className={cn(styles.mainMedia, styles.copyReveal)} style={{ '--reveal-delay': '0.4s' } as React.CSSProperties}>
-                <img src={activeImage} alt={`${activeHall.name} фото ${activeMediaIndex + 1}`} loading="lazy" />
-              </figure>
-              <div className={cn(styles.thumbRow, styles.copyReveal)} style={{ '--reveal-delay': '0.6s' } as React.CSSProperties}>
-                {displayMedia.map((mediaSrc, index) => (
-                  <button
-                    key={`${activeHall.id}-thumb-${index}`}
-                    className={styles.thumb}
-                    data-active={index === activeMediaIndex}
-                    onClick={() => handleThumbClick(index)}
-                    aria-label={`Показать фото ${index + 1}`}
-                  >
-                    <img src={mediaSrc} alt="" loading="lazy" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+            hall={activeHall}
+            activeImage={activeImage}
+            activeMediaIndex={activeMediaIndex}
+            displayMedia={displayMedia}
+            inView={section.inView}
+            onThumbClick={handleThumbClick}
+            onBookHall={onBookHall}
+          />
 
           <button className={`${styles.navArrow} ${styles.navArrowRight}`} onClick={handleNext} aria-label="Следующий зал">
             <img src={arrowRight} alt="" aria-hidden="true" />

@@ -23,8 +23,10 @@ export const Breadcrumbs = ({ items, onNavigate }: BreadcrumbsProps) => (
               <button className={`${styles.button} typo-breadcrumbs`} type="button" onClick={() => onNavigate(item.slug!)}>
                 {item.label}
               </button>
-            ) : (
+            ) : isLast ? (
               <span className={`${styles.current} typo-breadcrumbs`}>{item.label}</span>
+            ) : (
+              <span className={`${styles.inactive} typo-breadcrumbs`}>{item.label}</span>
             )}
             {!isLast && <span className={styles.separator}>-</span>}
           </li>

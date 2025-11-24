@@ -1,0 +1,344 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  background: rgba(17, 39, 31, 0.35);
+  backdrop-filter: blur(6px);
+  z-index: 160;
+}
+
+.modal {
+  width: min(80vw, 1300px);
+  max-height: 90vh;
+  background: var(--color-light);
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-floating);
+  padding: clamp(32px, 5vw, 56px) clamp(28px, 8vw, 130px);
+  display: flex;
+  flex-direction: column;
+  color: var(--color-dark);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kicker {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: var(--color-muted);
+}
+
+.title {
+  color: var(--color-dark);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--color-dark);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(28px, 4vw, 61px);
+  margin-top: 35px;
+  align-items: stretch;
+}
+
+.media {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.photoFrame {
+  aspect-ratio: 487 / 564;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(17, 39, 31, 0.08), rgba(17, 39, 31, 0.02));
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photoFrame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photoStub {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  font-size: 14px;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(17, 39, 31, 0.05),
+    rgba(17, 39, 31, 0.05) 10px,
+    rgba(17, 39, 31, 0.1) 10px,
+    rgba(17, 39, 31, 0.1) 20px
+  );
+}
+
+.badge {
+  align-self: flex-start;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  background: rgba(17, 39, 31, 0.08);
+  color: var(--color-dark);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.description {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-dark);
+  margin-bottom: 45px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 13px
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputStack {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+}
+
+.field {
+  position: relative;
+  border: 1px solid var(--color-dark);
+  border-radius: 5px;
+  background: transparent;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field:focus-within {
+  border-color: var(--color-dark);
+  box-shadow: 0 10px 30px rgba(17, 39, 31, 0.08);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 23px;
+  color: var(--color-dark);
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--font-primary);
+  resize: none;
+}
+
+.field textarea {
+  padding-top: 18px;
+  min-height: 150px;
+}
+
+.field textarea::selection,
+.field input::selection {
+  background: rgba(17, 39, 31, 0.15);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(17, 39, 31, 0.7);
+}
+
+.placeholder {
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-dark);
+  font-size: 16px;
+  font-weight: 400;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.fieldActive .placeholder,
+.field:focus-within .placeholder {
+  top: 10px;
+  transform: translateY(0);
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.fieldTextarea .placeholder {
+  top: 16px;
+  transform: translateY(0);
+}
+
+.fieldTextarea {
+  margin-top: 21px;
+}
+
+.checkboxRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px;
+  align-items: center;
+  color: var(--color-dark);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxRow input {
+  display: none;
+}
+
+.checkboxBox {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid var(--color-dark);
+  position: relative;
+  background: transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.checkboxRow input:checked + .checkboxBox {
+  background: var(--color-dark);
+  border-color: var(--color-dark);
+}
+
+.checkboxLabel {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.privacyLink {
+  background: none;
+  border: none;
+  color: var(--color-dark);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit {
+  padding: 18px 32px;
+  border-radius: 8px;
+  background: var(--color-dark);
+  color: var(--color-light);
+  border: 1px solid var(--color-dark);
+  min-width: 200px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.submit:hover:enabled {
+  transform: translateY(1px);
+  box-shadow: 0 12px 30px rgba(17, 39, 31, 0.18);
+}
+
+.submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1100px) {
+  .content {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+
+  .formColumn {
+    order: -1;
+  }
+
+  .modal {
+    width: min(92vw, 1100px);
+    padding: clamp(28px, 6vw, 44px);
+  }
+}
+
+@media (max-width: 720px) {
+  .overlay {
+    padding: 12px;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 92vh;
+    padding: 24px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .description {
+    margin-bottom: 32px;
+  }
+
+  .submit {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+}

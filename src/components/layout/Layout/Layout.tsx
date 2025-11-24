@@ -7,7 +7,7 @@ import { BookHallPopup } from '@/components/popups/BookHallPopup/BookHallPopup'
 import { MenuPopup } from '@/components/popups/MenuPopup/MenuPopup'
 import type { PageSlug } from '@/constants/pages'
 import { CONTACTS } from '@/data/contacts'
-import type { NavigationItem, PopupType } from '@/types/site'
+import type { BookingContext, NavigationItem, PopupType } from '@/types/site'
 
 import styles from './Layout.module.css'
 
@@ -16,6 +16,7 @@ type LayoutProps = {
   navItems: NavigationItem[]
   activePage: PageSlug
   popup: PopupType
+  bookingContext: BookingContext
   onNavigate: (slug: PageSlug) => void
   onClosePopup: () => void
 }
@@ -25,6 +26,7 @@ export const Layout = ({
   navItems,
   activePage,
   popup,
+  bookingContext,
   onNavigate,
   onClosePopup,
 }: LayoutProps) => {
@@ -52,6 +54,7 @@ export const Layout = ({
       <BookHallPopup
         isOpen={popup === 'booking'}
         onClose={onClosePopup}
+        context={bookingContext}
       />
     </div>
   )

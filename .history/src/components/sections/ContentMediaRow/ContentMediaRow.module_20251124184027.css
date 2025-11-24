@@ -7,7 +7,7 @@
   max-width: 1300px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 24px;
 }
 
@@ -19,6 +19,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.verticalText {
+  transform: rotate(180deg);
 }
 
 .track {
@@ -47,13 +51,14 @@
 .card {
   width: 280px;
   height: 160px;
-  border-radius: 24px;
+  border-radius: 5px;
   overflow: hidden;
   flex-shrink: 0;
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.5s ease, transform 0.5s ease;
   transition-delay: var(--card-delay, 0s);
+  background: var(--color-light-variant);
 }
 
 .cardVisible {
@@ -74,9 +79,7 @@
   }
 
   .verticalLabel {
-    writing-mode: horizontal-tb;
-    transform: rotate(-90deg);
-    justify-content: flex-start;
+    display: none;
   }
 
   .track {
@@ -90,12 +93,6 @@
     gap: 12px;
   }
 
-  .verticalLabel {
-    transform: none;
-    text-align: left;
-    width: 100%;
-  }
-
   .track {
     width: 100%;
   }
@@ -103,6 +100,6 @@
   .card {
     width: 220px;
     height: 140px;
-    border-radius: 18px;
+    border-radius: 5px;
   }
 }

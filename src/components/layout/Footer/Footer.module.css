@@ -10,8 +10,14 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
-  will-change: transform, filter, opacity;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.contentReady {
+  opacity: 1;
+  transform: none;
 }
 
 .primary {
@@ -28,6 +34,18 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 20px;
 }
+
+.columnsReady .column {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: footerFadeUp 0.6s ease forwards;
+}
+
+.columnsReady .column:nth-child(1) { animation-delay: 0.05s; }
+.columnsReady .column:nth-child(2) { animation-delay: 0.15s; }
+.columnsReady .column:nth-child(3) { animation-delay: 0.25s; }
+.columnsReady .column:nth-child(4) { animation-delay: 0.35s; }
+.columnsReady .column:nth-child(5) { animation-delay: 0.45s; }
 
 .nav {
   max-width: 1140px;
@@ -147,6 +165,18 @@
   flex-wrap: wrap;
 }
 
+.linksReady a {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: footerFadeUp 0.5s ease forwards;
+}
+
+.linksReady a:nth-child(1) { animation-delay: 0.6s; }
+.linksReady a:nth-child(2) { animation-delay: 0.7s; }
+.linksReady a:nth-child(3) { animation-delay: 0.8s; }
+.linksReady a:nth-child(4) { animation-delay: 0.9s; }
+.linksReady a:nth-child(5) { animation-delay: 1s; }
+
 .media {
   display: grid;
   grid-template-columns: 5fr 4fr;
@@ -163,6 +193,17 @@
 .img {
   width: 100%;
   height: 100%;
+}
+
+@keyframes footerFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 

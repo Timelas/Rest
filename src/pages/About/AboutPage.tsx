@@ -11,12 +11,13 @@ import gallery4 from '@/assets/img/menu1.png'
 import gallery5 from '@/assets/img/menu2.png'
 import gallery6 from '@/assets/img/menu3.png'
 import gallery7 from '@/assets/img/menu4.png'
+import type { BookingContext } from '@/types/site'
 
 import styles from './AboutPage.module.css'
 
 type AboutPageProps = {
   onNavigate: (slug: PageSlug) => void
-  onBook: () => void
+  onBook: (context?: Partial<BookingContext>) => void
 }
 
 const GALLERY_IMAGES = [
@@ -59,7 +60,11 @@ export const AboutPage = ({ onNavigate, onBook }: AboutPageProps) => (
     </section>
 
     <section className={styles.gallerySection}>
-      <AsymmetricalGallery images={GALLERY_IMAGES} buttonLabel="Забронировать стол" onButtonClick={onBook} />
+      <AsymmetricalGallery
+        images={GALLERY_IMAGES}
+        buttonLabel="Забронировать стол"
+        onButtonClick={() => onBook({ intent: 'table' })}
+      />
     </section>
   </div>
 )

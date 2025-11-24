@@ -34,37 +34,50 @@ export const Header = ({
   const [isBackgroundLight, setIsBackgroundLight] = useState(false)
   const [isIntroAnimating, setIsIntroAnimating] = useState(activePage === 'home')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const forceDarkBranding = activePage === 'about' || activePage === 'menu' || activePage === 'banquets'
+  const [isMobile, setIsMobile] = useState<boolean>(() => (typeof window !== 'undefined' ? window.innerWidth <= 1026 : false))
+  const forceDarkBranding = ['about', 'menu', 'banquets', 'kidsAnimation', 'summerVeranda', 'contacts'].includes(activePage)
+  const effectiveForceDarkBranding = forceDarkBranding && !(isMobile && isScrolled)
+  const highlightContacts = ['menu', 'banquets', 'kidsAnimation', 'summerVeranda', 'contacts'].includes(activePage)
   const currentPageLabel = useMemo(() => PAGE_DEFINITIONS[activePage]?.label ?? 'Меню', [activePage])
 
   const updateIndicator = useCallback(() => {
     const board = boardRef.current
     if (!board) return
 
-    const activeElement = board.querySelector<HTMLButtonElement>(
-      `[data-slug="${activePage}"]`
-    )
+    const activeElement = board.querySelector<HTMLButtonElement>(`[data-slug="${activePage}"]`)
 
     if (!activeElement) {
       setIndicator({ width: 0, left: 0 })
       return
     }
 
+    const navItems = Array.from(board.querySelectorAll<HTMLButtonElement>('[data-slug]'))
+    const isLastItem = navItems[navItems.length - 1] === activeElement
+
     const parentRect = board.getBoundingClientRect()
     const { left, width } = activeElement.getBoundingClientRect()
+    const adjustedWidth = Math.max(0, width - (isLastItem ? 2 : 0))
+    const centerShift = isLastItem ? -1 : 0
 
     setIndicator({
-      width,
-      left: left - parentRect.left,
+      width: adjustedWidth,
+      left: left - parentRect.left + width / 2 + centerShift,
     })
   }, [activePage])
 
   useEffect(() => {
-    updateIndicator()
-  }, [updateIndicator])
+    const rafId = requestAnimationFrame(updateIndicator)
+    const fontReady = (document as unknown as { fonts?: { ready?: Promise<void> } }).fonts?.ready
+    fontReady?.then(() => requestAnimationFrame(updateIndicator))
+    return () => cancelAnimationFrame(rafId)
+  }, [updateIndicator, activePage])
 
   useEffect(() => {
-    const handleResize = () => updateIndicator()
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1026)
+      updateIndicator()
+    }
+    handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [updateIndicator])
@@ -88,7 +101,7 @@ export const Header = ({
   }, [activePage])
 
   const detectBackground = useCallback(() => {
-    if (forceDarkBranding) {
+    if (effectiveForceDarkBranding) {
       setIsBackgroundLight(false)
       return
     }
@@ -147,8 +160,13 @@ export const Header = ({
       window.removeEventListener('resize', detectBackground)
     }
   }, [detectBackground])
-  const logoVariant = forceDarkBranding ? 'dark' : activePage === 'home' ? 'light' : isBackgroundLight ? 'dark' : 'light'
-  const burgerIconSrc = forceDarkBranding ? burgerIconDark : burgerIcon
+  const logoVariant = effectiveForceDarkBranding ? 'dark' : activePage === 'home' ? 'light' : isBackgroundLight ? 'dark' : 'light'
+  const burgerIconSrc = effectiveForceDarkBranding ? burgerIconDark : burgerIcon
+  const contactsClass = cn(
+    styles.contacts,
+    highlightContacts && !isScrolled && styles.contactsAccent,
+    highlightContacts && isScrolled && styles.contactsLight
+  )
 
   useEffect(() => {
     const handleResize = () => {
@@ -173,6 +191,7 @@ export const Header = ({
   }
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false)
+  const mobilePageLabel = activePage === 'banquets' ? 'Банкеты' : currentPageLabel
 
   return (
     <>
@@ -201,7 +220,7 @@ export const Header = ({
                 className={styles.navActive}
                 style={{
                   width: indicator.width,
-                  transform: `translateX(${indicator.left}px)`,
+                  transform: `translateX(${indicator.left}px) translateX(-50%)`,
                 }}
               />
             )}
@@ -227,7 +246,7 @@ export const Header = ({
             type="button"
             className={cn(
               styles.burgerButton,
-              forceDarkBranding && styles.burgerButtonDark,
+              effectiveForceDarkBranding && styles.burgerButtonDark,
               isMobileMenuOpen && styles.burgerButtonOpen
             )}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -238,18 +257,18 @@ export const Header = ({
               className={cn(
                 styles.burgerLabel,
                 'typo-button-advantage',
-                forceDarkBranding && styles.burgerLabelDark
+                effectiveForceDarkBranding && styles.burgerLabelDark
               )}
             >
-              {currentPageLabel}
+              {mobilePageLabel}
             </span>
-            <span className={cn(styles.burgerIcon, forceDarkBranding && styles.burgerIconDark)}>
+            <span className={cn(styles.burgerIcon, effectiveForceDarkBranding && styles.burgerIconDark)}>
               <img src={burgerIconSrc} alt="" aria-hidden="true" />
               <span className={cn(styles.burgerCross, isMobileMenuOpen && styles.burgerCrossVisible)} />
             </span>
           </button>
         </div>
-        <div className={styles.contacts}>
+        <div className={contactsClass}>
           <a className={cn('typo-base', styles.phone)} href="tel:+74994604296">
             +7 499 460 42 96
           </a>

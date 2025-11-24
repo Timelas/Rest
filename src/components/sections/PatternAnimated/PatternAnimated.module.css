@@ -11,7 +11,8 @@
 }
 
 .wrapper {
-  width: 100%;
+  width: 100dvw;
+  margin-left: calc(50% - 50dvw);
   display: flex;
   justify-content: center;
   overflow: hidden;
@@ -59,12 +60,8 @@
 
 @media (max-width: 600px) {
   .wrapper {
-    width: 600px;
+    width: 100dvw;
+    margin-left: calc(50% - 50dvw);
     justify-content: flex-start;
-    margin-left: -15px;
-  }
-  
-  .wrapper :global(svg) {
-    width: 600px;
   }
 }

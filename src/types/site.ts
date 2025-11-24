@@ -34,4 +34,11 @@ export type GalleryPattern = {
   layout: ('wide' | 'tall' | 'square')[]
 }
 
+export type BookingContext = {
+  intent: 'hall' | 'table'
+  hallId?: string
+  hallName?: string
+  hallImage?: string
+}
+
 export type PopupType = 'menu' | 'booking' | null

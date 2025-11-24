@@ -7,13 +7,14 @@ import { BanquetsShowcase } from '@/components/sections/BanquetsShowcase/Banquet
 import { HallsShowcase } from '@/components/sections/HallsShowcase/HallsShowcase'
 import { FamilyActivities } from '@/components/sections/FamilyActivities/FamilyActivities'
 import { GALLERY_IMAGES, HERO_BADGES } from '@/data/content'
+import type { BookingContext } from '@/types/site'
 import heroVideoWebm from '@/assets/video/home.webm?url'
 import heroVideoMp4 from '@/assets/video/home.MP4?url'
 
 import styles from './HomePage.module.css'
 
 type HomePageProps = {
-  onBook: () => void
+  onBook: (context?: Partial<BookingContext>) => void
   onOpenMenu: () => void
   onNavigateAbout: () => void
 }
@@ -29,7 +30,7 @@ export const HomePage = ({ onBook, onOpenMenu, onNavigateAbout }: HomePageProps)
       subtitle="Грузинский ресторан в Москве на Мичуринском проспекте STRAPEZO Ресторан грузинской и европейской кухни. Банкеты и дни рождения"
       description=""
       badges={HERO_BADGES}
-      onBook={onBook}
+      onBook={() => onBook({ intent: 'table' })}
       onOpenMenu={onOpenMenu}
     />
 
@@ -54,7 +55,7 @@ export const HomePage = ({ onBook, onOpenMenu, onNavigateAbout }: HomePageProps)
     </section>
 
     <section className={styles.hallsSection}>
-      <HallsShowcase />
+      <HallsShowcase onBookHall={(hall) => onBook(hall)} />
     </section>
     
     <section className={`${styles.patternSection} ${styles.patternSectionSecondary}`}>

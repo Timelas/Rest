@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 import { useInView } from '@/hooks/useInView'
 import { cn } from '@/utils/cn'
 
-import styles from './EventMediaRow.module.css'
+import styles from './ContentMediaRow.module.css'
 
 type MediaItem = {
   id: string
@@ -11,17 +11,17 @@ type MediaItem = {
   alt: string
 }
 
-type EventMediaRowProps = {
+type ContentMediaRowProps = {
   label: string
   items: MediaItem[]
 }
 
-export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
+export const ContentMediaRow = ({ label, items }: ContentMediaRowProps) => {
   const section = useInView<HTMLDivElement>({ threshold: 0.2 })
   const [isSliderMode, setIsSliderMode] = useState(false)
   const trackRef = useRef<HTMLDivElement | null>(null)
   const lastScrollYRef = useRef(0)
-  const windowScrollRaf = useRef<number | null>(null)
+  const baseWidthRef = useRef(0)
 
   const sliderItems = useMemo(() => (isSliderMode ? [...items, ...items] : items), [items, isSliderMode])
 
@@ -29,7 +29,7 @@ export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
     if (!isSliderMode) return
     const track = trackRef.current
     if (!track) return
-    const baseWidth = track.scrollWidth / 2
+    const baseWidth = baseWidthRef.current
     if (baseWidth <= 0) return
 
     if (track.scrollLeft <= 0) {
@@ -43,10 +43,12 @@ export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
     if (!isSliderMode) return
     const track = trackRef.current
     if (!track) return
-
     const baseWidth = track.scrollWidth / 2
-    if (baseWidth <= 0) return
-    track.scrollLeft = baseWidth / 2
+    baseWidthRef.current = baseWidth
+    if (baseWidth > 0) {
+      const start = baseWidth / 2
+      track.scrollLeft = start
+    }
   }, [isSliderMode])
 
   useEffect(() => {
@@ -62,6 +64,7 @@ export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
         } else {
           const track = trackRef.current
           if (track) track.scrollLeft = 0
+          baseWidthRef.current = 0
         }
       })
     }
@@ -84,39 +87,19 @@ export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
     lastScrollYRef.current = window.scrollY
 
     const handleWindowScroll = () => {
-      if (windowScrollRaf.current !== null) return
-      windowScrollRaf.current = requestAnimationFrame(() => {
-        windowScrollRaf.current = null
-        const track = trackRef.current
-        if (!track) return
-
-        const delta = window.scrollY - lastScrollYRef.current
-        lastScrollYRef.current = window.scrollY
-        if (delta === 0) return
-
-        track.scrollLeft += delta * 0.35
-        normalizeLoop()
-      })
+      const track = trackRef.current
+      if (!track) return
+      const delta = window.scrollY - lastScrollYRef.current
+      lastScrollYRef.current = window.scrollY
+      if (delta === 0) return
+      track.scrollLeft += delta * 0.3
+      normalizeLoop()
+      track.scrollLeft += delta * 0.3
+      normalizeLoop()
     }
 
     window.addEventListener('scroll', handleWindowScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', handleWindowScroll)
-      if (windowScrollRaf.current !== null) {
-        cancelAnimationFrame(windowScrollRaf.current)
-        windowScrollRaf.current = null
-      }
-    }
-  }, [isSliderMode, normalizeLoop])
-
-  useEffect(() => {
-    if (!isSliderMode) return
-    const track = trackRef.current
-    if (!track) return
-
-    const handleTrackScroll = () => normalizeLoop()
-    track.addEventListener('scroll', handleTrackScroll)
-    return () => track.removeEventListener('scroll', handleTrackScroll)
+    return () => window.removeEventListener('scroll', handleWindowScroll)
   }, [isSliderMode, normalizeLoop])
 
   useEffect(() => {
@@ -144,6 +127,7 @@ export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
       if (!isDragging) return
       const delta = event.clientX - startX
       track.scrollLeft = startScrollLeft - delta
+      normalizeLoop()
     }
 
     const stopDragging = () => {
@@ -154,7 +138,7 @@ export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
         try {
           track.releasePointerCapture(pointerId)
         } catch {
-          // already released
+          /* ignore */
         }
         pointerId = null
       }
@@ -178,10 +162,10 @@ export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
   }, [isSliderMode, normalizeLoop])
 
   return (
-    <section className={styles.section} ref={section.ref}>
+    <div className={styles.section} ref={section.ref}>
       <div className={styles.inner}>
         <div className={styles.verticalLabel}>
-          <span className="typo-h4">{label}</span>
+          <span className={`${styles.verticalText} typo-h2`}>{label}</span>
         </div>
         <div className={cn(styles.track, isSliderMode && styles.trackSlider)} ref={trackRef}>
           {sliderItems.map((item, index) => (
@@ -195,6 +179,6 @@ export const EventMediaRow = ({ label, items }: EventMediaRowProps) => {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   )
 }

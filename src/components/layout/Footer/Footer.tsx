@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { Contacts } from '@/data/contacts'
 import mapImage from '@/assets/img/FooterMap.png'
@@ -30,50 +30,37 @@ const SOCIAL_ICONS: Record<string, string> = {
 
 export const Footer = ({ contacts }: FooterProps) => {
   const footerRef = useRef<HTMLElement | null>(null)
-  const [progress, setProgress] = useState(0)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    const updateProgress = () => {
+    const activate = () => setReady(true)
+    const handleScroll = () => {
+      if (ready) return
       const target = footerRef.current
       if (!target) return
-
       const rect = target.getBoundingClientRect()
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight
-      const distance = viewportHeight - rect.top
-      const isNarrow = window.innerWidth <= 1024
-      const animationHeight = isNarrow ? Math.max(rect.height / 2, 1) : Math.max(rect.height, 1)
-      const ratio = distance / animationHeight
-      const clamped = Math.min(Math.max(ratio, 0), 1)
-      setProgress(clamped)
+      if (rect.top <= viewportHeight * 0.9) {
+        activate()
+      }
     }
 
-    const onScroll = () => requestAnimationFrame(updateProgress)
-
-    updateProgress()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', updateProgress)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll)
 
     return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', updateProgress)
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
     }
-  }, [])
-
-  const animatedStyle = useMemo(
-    () => ({
-      transform: `translateY(${-150 * (1 - progress)}px)`,
-      filter: `blur(${20 * (1 - progress)}px)`,
-      opacity: progress,
-    }),
-    [progress]
-  )
+  }, [ready])
 
   return (
     <footer className={styles.footer} ref={footerRef}>
-      <div className={styles.content} style={animatedStyle}>
+      <div className={cn(styles.content, ready && styles.contentReady)}>
         <div className={styles.primary}>
           <div className={styles.nav}>
-          <div className={styles.columns}>
+          <div className={cn(styles.columns, ready && styles.columnsReady)}>
           <div className={styles.column}>
             <p className={cn('typo-footer', styles.columnTitle)}>Адрес</p>
             <p className={cn('typo-footer', styles.columnText)}>{contacts.addressMini}</p>
@@ -121,14 +108,14 @@ export const Footer = ({ contacts }: FooterProps) => {
           </div>
           <div className={styles.divider} />
           <div className={styles.bottomRow}>
-          <div className={styles.bottomLeft}>
+          <div className={cn(styles.bottomLeft, ready && styles.linksReady)}>
             {POLICY_LINKS.map((link) => (
               <a key={link} className={cn('typo-footer', styles.link, styles.underlineLink)} href="#">
                 {link}
               </a>
             ))}
           </div>
-          <div className={styles.bottomRight}>
+          <div className={cn(styles.bottomRight, ready && styles.linksReady)}>
             {SECONDARY_LINKS.map((link) => (
               <a key={link} className={cn('typo-footer', styles.link, styles.underlineLink)} href="#">
                 {link}

@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react'
 
 import rest1 from '@/assets/img/rest1.png'
 import rest2 from '@/assets/img/rest2.png'
@@ -22,12 +22,156 @@ const FRAMES = [
   { id: 'rightBottom', src: rest4, className: styles.rightBottom, alt: 'Атмосфера Satrapezo' },
 ] as const
 
+const MIN_DISTANCE = 450
+const HOLD_MS = 1000
+const DROP_DURATION_MS = 950
+const FALLBACK_CLEAR_MS = DROP_DURATION_MS + 320
+
+type FloatingPhoto = {
+  id: number
+  x: number
+  y: number
+  src: string
+  active: boolean
+  dropping: boolean
+  dropTarget: number
+  dropDuration: number
+  tilt: number
+  originX: string
+  driftX: string
+}
+
 export const AboutPreview = ({ onNavigateAbout }: AboutPreviewProps) => {
   const section = useInView<HTMLDivElement>({ threshold: 0.15 })
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window === 'undefined' ? true : window.innerWidth >= 1024
+  )
+  const [photos, setPhotos] = useState<FloatingPhoto[]>([])
+  const galleryRef = useRef<HTMLDivElement | null>(null)
+  const lastSpawnRef = useRef<{ x: number; y: number; time: number } | null>(null)
+  const timersRef = useRef<number[]>([])
+  const idRef = useRef(0)
+  const frameIndexRef = useRef(0)
+
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    if (!isDesktop) {
+      setPhotos([])
+      lastSpawnRef.current = null
+    }
+  }, [isDesktop])
+
+  useEffect(
+    () => () => {
+      timersRef.current.forEach((t) => window.clearTimeout(t))
+      timersRef.current = []
+    },
+    []
+  )
+
+  const spawnFrame = (event: MouseEvent<HTMLDivElement>) => {
+    if (!isDesktop) return
+    const last = lastSpawnRef.current
+    const dist = last ? Math.hypot(event.clientX - last.x, event.clientY - last.y) : Infinity
+    if (dist < MIN_DISTANCE) return
+    const now = Date.now()
+
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    const containerHeight = galleryRef.current?.offsetHeight ?? rect.height
+    const dropTarget = (containerHeight || 500) * 1.35
+    const dropDuration = DROP_DURATION_MS
+    const deltaX = last ? event.clientX - last.x : 0
+    const tilt = Math.max(-8, Math.min(8, deltaX * 0.06))
+    const originX = deltaX >= 0 ? '65%' : '35%'
+    const driftX = `${Math.max(-22, Math.min(22, deltaX * 0.12))}px`
+
+    const id = ++idRef.current
+    const src = FRAMES[frameIndexRef.current % FRAMES.length].src
+    frameIndexRef.current += 1
+    lastSpawnRef.current = { x: event.clientX, y: event.clientY, time: now }
+
+    setPhotos((prev) => {
+      const trimmed = prev.length >= 4 ? prev.slice(prev.length - 3) : prev
+      return [
+        ...trimmed,
+        {
+          id,
+          x,
+          y,
+          src,
+          active: false,
+          dropping: false,
+          dropTarget,
+          dropDuration,
+          tilt,
+          originX,
+          driftX,
+        },
+      ]
+    })
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setPhotos((prev) => prev.map((photo) => (photo.id === id ? { ...photo, active: true } : photo)))
+      })
+    })
+
+    const dropTimer = window.setTimeout(() => {
+      setPhotos((prev) => prev.map((photo) => (photo.id === id ? { ...photo, dropping: true } : photo)))
+    }, HOLD_MS)
+
+    const clearTimer = window.setTimeout(() => {
+      setPhotos((prev) => prev.filter((photo) => photo.id !== id))
+    }, Math.max(FALLBACK_CLEAR_MS, HOLD_MS + dropDuration + 200))
+
+    timersRef.current.push(dropTimer, clearTimer)
+  }
 
   return (
-    <div className={styles.about} ref={section.ref}>
-      <div className={styles.gallery}>
+    <div
+      className={styles.about}
+      ref={section.ref}
+      onMouseMove={spawnFrame}
+    >
+      <div className={styles.gallery} ref={galleryRef}>
+        {photos.map((photo) => (
+          <figure
+            key={photo.id}
+            className={cn(
+              styles.floatingPhoto,
+              photo.active && styles.floatingPhotoActive,
+              photo.dropping && styles.floatingPhotoDropping
+            )}
+            style={
+              {
+                '--cursor-x': `${photo.x}px`,
+                '--cursor-y': `${photo.y}px`,
+                '--drop-duration': `${photo.dropDuration}ms`,
+                '--drop-target': `${photo.dropTarget}px`,
+                '--tilt': `${photo.tilt}deg`,
+                '--origin-x': photo.originX,
+                '--spawn-shift': photo.driftX,
+              } as CSSProperties
+            }
+            aria-hidden="true"
+            onTransitionEnd={(event) => {
+              if (event.propertyName === 'opacity' && photo.dropping) {
+                setPhotos((prev) => prev.filter((item) => item.id !== photo.id))
+              }
+            }}
+          >
+            <img src={photo.src} alt="" />
+          </figure>
+        ))}
+
         <div className={styles.columnLeft}>
           {FRAMES.slice(0, 2).map((frame) => (
             <figure

@@ -1,0 +1,204 @@
+.page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 170px 150px 120px;
+}
+
+.section {
+  width: 100%;
+  max-width: 1280px;
+  align-self: center;
+}
+
+.logoSection {
+  margin-top: 106px;
+  max-width: 1440px;
+  overflow: hidden;
+}
+
+.spacedSection {
+  margin-top: 80px;
+}
+
+.kidsLogoBlock {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.kidsSliderWrapper {
+  width: 100%;
+}
+
+.kidsSliderTrack {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.kidsSlide {
+  height: 616px;
+  width: var(--slide-width, 327px);
+  background: #792929;
+  color: var(--color-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+  flex-shrink: 0;
+  border-radius: 0;
+}
+
+.kidsSlide[data-wide='true'] {
+  width: 478px;
+}
+
+.centerText {
+  text-align: center;
+}
+
+.centerTextBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.centerTextBlock p {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.centerTextBlockVisible p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.centerTextBlockVisible p:nth-child(1) { transition-delay: 0s; }
+.centerTextBlockVisible p:nth-child(2) { transition-delay: 0.12s; }
+.centerTextBlockVisible p:nth-child(3) { transition-delay: 0.24s; }
+.centerTextBlockVisible p:nth-child(4) { transition-delay: 0.36s; }
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.videoCard {
+  aspect-ratio: 271 / 415;
+  background: #792929;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sectionTitle {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.fullVideo {
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1440 / 619;
+  background: #792929;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1440px;
+}
+
+.blockStack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.textBlock p {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.textBlockVisible p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.textBlockVisible p:nth-child(1) { transition-delay: 0s; }
+.textBlockVisible p:nth-child(2) { transition-delay: 0.12s; }
+.textBlockVisible p:nth-child(3) { transition-delay: 0.24s; }
+.textBlockVisible p:nth-child(4) { transition-delay: 0.36s; }
+
+.galleryTitle {
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .page {
+    padding: 150px 80px 100px;
+    gap: 60px;
+  }
+
+  .kidsSlide {
+    height: 420px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 140px 24px 80px;
+    gap: 30px;
+  }
+
+  .kidsSliderTrack {
+    animation-duration: 28s;
+  }
+
+  .kidsSlide {
+    width: 260px;
+    height: 320px;
+  }
+
+  .kidsSlide[data-wide='true'] {
+    width: 320px;
+  }
+
+  .fullVideo {
+    height: 280px;
+  }
+
+  .videoGrid {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 8px;
+  }
+  
+  .logoSection {
+    margin-top: 0;
+  }
+
+  .spacedSection {
+    margin-top: 0;
+  }
+}

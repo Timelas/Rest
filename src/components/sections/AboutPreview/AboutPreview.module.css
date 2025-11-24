@@ -1,6 +1,6 @@
 .about {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   min-height: 823px;
   margin-bottom: 18px;
@@ -8,20 +8,61 @@
 }
 
 .gallery {
+  position: relative;
   width: 100%;
-  gap: 20px;
+  min-height: 823px;
   overflow: hidden;
   display: grid;
+  grid-template-columns: 1fr;
   justify-items: center;
-  grid-template-columns:
-    clamp(100px, 25vw, 394px)  /* левая часть */
-    1fr                        /* середина */
-    clamp(100px, 25vw, 394px); /* правая часть */
+  align-items: center;
+}
+
+.floatingPhoto {
+  position: absolute;
+  left: var(--cursor-x, 50%);
+  top: var(--cursor-y, 50%);
+  width: clamp(220px, 24vw, 360px);
+  aspect-ratio: 0.77 / 1;
+  border-radius: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform-origin: var(--origin-x, 50%) 50%;
+  transform: translate(-50%, -50%) translateY(0) translateX(calc(var(--spawn-shift, 0px) * 0.4)) scale(0.65) rotate(var(--tilt, 0deg));
+  opacity: 0;
+  filter: blur(1px);
+  transition:
+    transform 560ms cubic-bezier(0.16, 0.9, 0.2, 1.1),
+    filter 200ms ease,
+    opacity 360ms ease-out;
+  box-shadow: var(--shadow-soft);
+  z-index: 2;
+}
+
+.floatingPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.floatingPhotoActive {
+  transform: translate(-50%, -50%) translateY(0) translateX(var(--spawn-shift, 0px)) scale(1.08) rotate(var(--tilt, 0deg));
+  opacity: 1;
+  filter: blur(0);
+}
+
+.floatingPhotoDropping {
+  transform: translate(-50%, -50%) translateY(var(--drop-target, 140%)) translateX(var(--spawn-shift, 0px)) scale(1.05) rotate(var(--tilt, 0deg));
+  opacity: 0;
+  transition:
+    transform var(--drop-duration, 900ms) cubic-bezier(0.45, 0, 0.9, 0.65),
+    opacity 200ms ease var(--drop-duration, 900ms);
 }
 
 .columnLeft {
   padding-left: 0;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 24px;
   margin-left: -20px;
@@ -30,7 +71,7 @@
 }
 
 .columnRight {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-start;
@@ -39,6 +80,7 @@
 
 .frame {
   overflow: hidden;
+  position: relative;
 }
 
 .frame img {
@@ -102,6 +144,7 @@
   padding-top: 100px;
   gap: 40px;
   position: relative;
+  z-index: 10;
 }
 
 .logo {
@@ -167,6 +210,7 @@
   .gallery {
     width: 100%;
     justify-content: center;
+    min-height: auto;
   }
 
   .copy {
@@ -198,6 +242,11 @@
 @media (max-width: 768px) {
   .about {
     margin: 0 auto;
+    min-height: auto;
+  }
+
+  .floatingPhoto {
+    display: none;
   }
 
   .gallery {
@@ -205,7 +254,7 @@
     position: relative;
     width: min(290px, 90vw);
     margin: 0 auto 38px;
-
+    min-height: auto;
   }
 
   .columnLeft,

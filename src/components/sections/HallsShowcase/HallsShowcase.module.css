@@ -80,6 +80,10 @@
   max-width: 1160px;
 }
 
+.hallCardReverse {
+  flex-direction: row-reverse;
+}
+
 .hallCardLeavingRight {
   animation: hallCardLeaveRight 0.45s ease forwards;
 }
@@ -156,6 +160,10 @@
 .ctaRow {
   margin: 30px 0;
   align-self: center;
+}
+
+.ctaRowStart {
+  align-self: flex-start;
 }
 
 .galleryColumn {
@@ -339,6 +347,10 @@
     align-items: center;
     max-width: 100%;
     gap: 17px;
+  }
+
+  .hallCardReverse {
+    flex-direction: column-reverse;
   }
 
   .infoColumn {

@@ -1,0 +1,48 @@
+.breadcrumbs {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(17, 39, 31, 0.5) !important;
+}
+
+.list {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button {
+  border: none;
+  background: none;
+  padding: 0;
+  color: rgba(17, 39, 31, 0.5) !important;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.item:not(:last-child) .button {
+  color: rgba(17, 39, 31, 0.5) !important;
+}
+
+
+.current {
+  color: var(--color-dark);
+}
+
+.separator {
+  font-size: 12px;
+  color: currentColor;
+}

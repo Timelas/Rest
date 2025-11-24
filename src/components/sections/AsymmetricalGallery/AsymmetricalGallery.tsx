@@ -14,9 +14,10 @@ type GalleryImage = {
 type GalleryEntry = GalleryImage & { ratio: string }
 
 type AsymmetricalGalleryProps = {
-  images: GalleryImage[]
+  images: readonly GalleryImage[]
   buttonLabel: string
   onButtonClick: () => void
+  showButton?: boolean
 }
 
 type PatternStep =
@@ -48,7 +49,12 @@ const observerOptions: IntersectionObserverInit = {
   rootMargin: '0px 0px -10% 0px',
 }
 
-export const AsymmetricalGallery = ({ images, buttonLabel, onButtonClick }: AsymmetricalGalleryProps) => {
+export const AsymmetricalGallery = ({
+  images,
+  buttonLabel,
+  onButtonClick,
+  showButton = true,
+}: AsymmetricalGalleryProps) => {
   const section = useInView<HTMLDivElement>({ threshold: 0.2 })
   const [visibleTiles, setVisibleTiles] = useState<Record<string, boolean>>({})
   const tileRefs = useRef<Record<string, HTMLElement | null>>({})
@@ -179,11 +185,13 @@ export const AsymmetricalGallery = ({ images, buttonLabel, onButtonClick }: Asym
         </div>
       ))}
 
-      <div className={styles.actions}>
-        <Button size="large" padding="wide" onClick={onButtonClick}>
-          {buttonLabel}
-        </Button>
-      </div>
+      {showButton && (
+        <div className={styles.actions}>
+          <Button size="large" padding="wide" onClick={onButtonClick}>
+            {buttonLabel}
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
